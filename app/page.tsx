@@ -101,6 +101,7 @@ export default function Home() {
           {imageSrc && (
             <Image
               boxSize={"400px"}
+              objectFit="contain"
               id="uploaded-image"
               src={imageSrc}
               alt="Uploaded Preview"
