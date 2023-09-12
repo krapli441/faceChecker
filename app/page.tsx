@@ -1,12 +1,12 @@
 "use client";
 // Next 라이브러리
-import { useRef, useState } from "react";
+import { useRef, useState, ChangeEvent } from "react";
 
 // CSS
 import styles from "./page.module.css";
 
 // Chakra UO
-import { Box, Button, Text, Input, Heading } from "@chakra-ui/react";
+import { Box, Button, Text, Input, Heading, Image } from "@chakra-ui/react";
 
 const contentsStyle = {
   display: "flex",
@@ -26,19 +26,25 @@ const uploadStyle = {
 };
 
 export default function Home() {
+  const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [fileName, setFileName] = useState("선택된 파일 없음");
   const hiddenFileInput = useRef<HTMLInputElement>(null);
 
-  const handleClick = () => {
-    hiddenFileInput.current?.click();
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        if (typeof reader.result === "string") {
+          setImageSrc(reader.result);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
-  const handleFileChange = (e: any) => {
-    const file = e.target.files[0];
-    if (file) {
-      setFileName(file.name);
-      console.log("파일 업로드 완료: ", file);
-    }
+  const handleClick = () => {
+    hiddenFileInput.current?.click();
   };
 
   return (
@@ -60,6 +66,9 @@ export default function Home() {
             onChange={handleFileChange}
             style={{ display: "none" }}
           />
+          {imageSrc && (
+            <Image boxSize={"150px"} src={imageSrc} alt="Uploaded Preview" />
+          )}
           <Button
             colorScheme="blackAlpha"
             onClick={() => console.log("CLICK!")}
