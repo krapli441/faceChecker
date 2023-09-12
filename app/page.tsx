@@ -22,15 +22,9 @@ const contentsStyle = {
   gap: "5vh",
 };
 
-// const uploadStyle = {
-//   display: "flex",
-//   justifyContent: "center",
-//   alignItems: "center",
-// };
-
 export default function Home() {
   const [imageSrc, setImageSrc] = useState<string | null>(null);
-  const [fileName, setFileName] = useState("선택된 파일 없음");
+  const [detectedFace, setDetectedFace] = useState<number | null>(null);
   const hiddenFileInput = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -55,6 +49,8 @@ export default function Home() {
       imageElement,
       new faceapi.TinyFaceDetectorOptions()
     );
+
+    setDetectedFace(detections.length);
 
     // 결과 처리
     if (detections.length > 0) {
@@ -110,6 +106,7 @@ export default function Home() {
               alt="Uploaded Preview"
             />
           )}
+          {detectedFace && <Text>식별된 얼굴 정보 : {detectedFace}</Text>}
           <Button colorScheme="blackAlpha" onClick={() => handleFindFace()}>
             얼굴 찾기
           </Button>
