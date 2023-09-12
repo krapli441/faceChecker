@@ -55,6 +55,7 @@ export default function Home() {
           </Button>
           <Input
             type="file"
+            accept=".jpg, .jpeg, .png"
             ref={hiddenFileInput}
             onChange={handleFileChange}
             style={{ display: "none" }}
