@@ -35,9 +35,8 @@ export default function Home() {
 
   useEffect(() => {
     const loadModels = async () => {
-      await faceapi.nets.tinyFaceDetector.loadFromUri(
-        "https://github.com/justadudewhohacks/face-api.js/weights"
-      );
+      const faceapi = await import("face-api.js");
+      await faceapi.nets.tinyFaceDetector.loadFromUri("/weights");
     };
     loadModels();
   }, []);
@@ -51,12 +50,6 @@ export default function Home() {
       console.log("이미지가 로드되지 않았습니다.");
       return;
     }
-
-    // // face-api.js 모델 로드 (이 부분은 최초 한 번만 수행되어야 함)
-    // await faceapi.nets.tinyFaceDetector.loadFromUri(
-    //   "https://github.com/justadudewhohacks/face-api.js/weights"
-    // );
-
     // 얼굴 인식
     const detections = await faceapi.detectAllFaces(
       imageElement,
@@ -111,7 +104,7 @@ export default function Home() {
           />
           {imageSrc && (
             <Image
-              boxSize={"300px"}
+              boxSize={"400px"}
               id="uploaded-image"
               src={imageSrc}
               alt="Uploaded Preview"
