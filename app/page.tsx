@@ -5,8 +5,11 @@ import { useRef, useState, ChangeEvent } from "react";
 // CSS
 import styles from "./page.module.css";
 
-// Chakra UO
+// Chakra UI
 import { Box, Button, Text, Input, Heading, Image } from "@chakra-ui/react";
+
+// face-api.js
+import loadModels from "@/components/faceapi";
 
 const contentsStyle = {
   display: "flex",
@@ -19,11 +22,11 @@ const contentsStyle = {
   gap: "5vh",
 };
 
-const uploadStyle = {
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-};
+// const uploadStyle = {
+//   display: "flex",
+//   justifyContent: "center",
+//   alignItems: "center",
+// };
 
 export default function Home() {
   const [imageSrc, setImageSrc] = useState<string | null>(null);
